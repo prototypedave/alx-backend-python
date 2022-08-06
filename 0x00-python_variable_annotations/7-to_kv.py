@@ -2,6 +2,7 @@
 """ Complex types - string and int/float to tuple """
 from typing import Union, Tuple
 
+
 def to_kv(k: str, v: Union[int, float]) -> Tuple[str, float]:
     """ takes in a string k and a tuple v and returns k and square of v """
     return (k, v * v)
