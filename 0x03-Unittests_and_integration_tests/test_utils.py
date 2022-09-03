@@ -5,13 +5,13 @@ Parameterize a unit test
 
 import unittest
 from unittest.mock import patch
-from parameterized import parameterized
+from parameterized import parameterized 
 from utils import access_nested_map, get_json, memoize
 
 
 class TestAccessNestedMap(unittest.TestCase):
     """ inherits from unittest class """
-     """ path test case with expected output """ 
+    """ path test case with expected output """
     @parameterized.expand([
         ({"a" : 1}, ("a",), 1),
         ({"a": {"b": 2}}, ("a",), {"b": 2}),
@@ -21,22 +21,21 @@ class TestAccessNestedMap(unittest.TestCase):
         """ test accss of the path from a nested map """
         self.assertEqual(access_nested_map(nested_map, path), expected)
 
-    
+
     """ values that can raise error but are exceptional """
     @parameterized.expand([
         ({}, ("a",)),
         ({"a": 1}, ("a", "b"))
     ])
     def test_access_nested_map_exception(self, nested_map, path):
-    """ raises exception error from the code """
+        """ raises exception error from the code """
         with self.assertRaises(KeyError) as error:
             access_nested_map(nested_map, path)
         self.assertEqual(error.exception.args[0], path[-1])
 
 
 class TestGetJson(unittest.TestCase):
-    """ test class that inherits from unittest """
-    """ assigns data to prevent delay from loading over a network """
+    """ test class that inherits from unittest """   
     @parameterized.expand([
         ("http://example.com", {"payload": True}),
         ("http://holberton.io", {"payload": False})
