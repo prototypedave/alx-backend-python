@@ -3,7 +3,6 @@
 Parameterize and patch as decorators
 """
 
-
 import unittest
 from unittest.mock import patch, PropertyMock, Mock
 from parameterized import parameterized
@@ -14,19 +13,18 @@ from urllib.error import HTTPError
 
 class TestGithubOrgClient(unittest.TestCase):
     """ class that inherits from unittest """
-     
     @parameterized.expand([
         ("google"),
         ("abc"),
         ])
     @patch("client.get_json", return_value={"payload": True})
-
-    def test_org(self, org_name. mock_get):
+    def test_org(self, org_name, mock_get):
         """ tests if github client matches the input in the given format """
         test_client = GithubOrgClient(org_name)
         test_return = test_client.org
         self.assertEqual(test_return, mock_get.return_value)
         mock_get.assert_called_once
+
 
     def test_public_repos_url(self):
         """ tests for public repos of a given client """
@@ -41,8 +39,8 @@ class TestGithubOrgClient(unittest.TestCase):
             self.assertEqual(test_return,
                              mock_get.return_value.get("repos_url"))
 
-    @patch("client.get_json", return_value=[{"name": "holberton"}])
-    
+
+    @patch("client.get_json", return_value=[{"name": "holberton"}]) 
     def test_public_repos(self, mock_get):
         """ tests if a clients public repo appears once """
         with patch.object(GithubOrgClient,
@@ -55,16 +53,17 @@ class TestGithubOrgClient(unittest.TestCase):
             mock_get.assert_called_once
             mock_pub.assert_called_once
 
-     @parameterized.expand([
+
+    @parameterized.expand([
         ({"license": {"key": "my_license"}}, "my_license", True),
         ({"license": {"key": "other_license"}}, "my_license", False),
         ])
-
     def test_has_license(self, repo, license_key, expected_return):
         """ checks if a clients repo has license """
         test_client = GithubOrgClient("holberton")
         test_return = test_client.has_license(repo, license_key)
         self.assertEqual(expected_return, test_return)
+
 
 @parameterized_class(
     ("org_payload", "repos_payload", "expected_repos", "apache2_repos"),
@@ -73,7 +72,6 @@ class TestGithubOrgClient(unittest.TestCase):
 class TestIntegrationGithubOrgClient(unittest.TestCase):
     """ class that inherits unittest """
     @classmethod
-
     def setUpClass(cls):
         """ starts a mock up """
         cls.get_patcher = patch('requests.get', side_effect=HTTPError)
@@ -86,6 +84,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
     def test_public_repos(self):
         test_class = GithubOrgClient("holberton")
         assert True
+
     def test_public_repos_with_license(self):
         test_class = GithubOrgClient("holberton")
         assert True
