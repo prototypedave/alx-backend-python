@@ -12,14 +12,12 @@ from utils import access_nested_map, get_json, memoize
 
 class TestAccessNestedMap(unittest.TestCase):
     """ inherits from unittest class """
-   
-    """ path test case with expected output """ 
+     """ path test case with expected output """ 
     @parameterized.expand([
         ({"a" : 1}, ("a",), 1),
         ({"a": {"b": 2}}, ("a",), {"b": 2}),
         ({"a": {"b": 2}}, ("a", "b"), 2)
     ])
-
     def test_access_nested_map(self, nested_map, path, expected):
         """ test accss of the path from a nested map """
         self.assertEqual(access_nested_map(nested_map, path), expected)
